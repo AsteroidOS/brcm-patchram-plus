@@ -179,9 +179,141 @@ uchar hci_update_baud_rate[] = { 0x01, 0x18, 0xfc, 0x06, 0x00, 0x00,
 uchar hci_write_bd_addr[] = { 0x01, 0x01, 0xfc, 0x06,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+/* Custom Low Power Mode configuration.
+ * See android/hardware/broadcom/libbt/include/vnd_*.txt for more details. */
+#ifdef LPM_ANGLER
+#define LPM_IDLE_THRESHOLD              0x18
+#define LPM_HC_IDLE_THRESHOLD           0x18
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_ANTHIAS
+#define LPM_BT_WAKE_POLARITY            0x01
+#define LPM_HOST_WAKE_POLARITY          0x01
+#endif
+
+#ifdef LPM_BASS
+#define LPM_IDLE_THRESHOLD              0x0A
+#define LPM_HC_IDLE_THRESHOLD           0x0A
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_CARP
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_DORY
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_HAMMERHEAD
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_LENOK
+#define LPM_IDLE_THRESHOLD              0x0A
+#define LPM_HC_IDLE_THRESHOLD           0x0A
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_NEMO
+#define LPM_IDLE_THRESHOLD              0x0A
+#define LPM_HC_IDLE_THRESHOLD           0x0A
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_PUFFER
+#define LPM_IDLE_THRESHOLD              0x02
+#define LPM_HC_IDLE_THRESHOLD           0x02
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_SAWSHARK
+#define LPM_IDLE_THRESHOLD              0x18
+#define LPM_HC_IDLE_THRESHOLD           0x18
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_SHAMU
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_SMELT
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_SPARROW
+#define LPM_BT_WAKE_POLARITY            0x01
+#define LPM_HOST_WAKE_POLARITY          0x01
+#endif
+
+#ifdef LPM_STURGEON
+#define LPM_IDLE_THRESHOLD              0x18
+#define LPM_HC_IDLE_THRESHOLD           0x18
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_TETRA
+#define LPM_IDLE_THRESHOLD              0x01
+#define LPM_HC_IDLE_THRESHOLD           0x01
+#define LPM_BT_WAKE_POLARITY            0x00
+#define LPM_HOST_WAKE_POLARITY          0x00
+#endif
+
+#ifdef LPM_WREN
+#define LPM_BT_WAKE_POLARITY            0x01
+#define LPM_HOST_WAKE_POLARITY          0x01
+#endif
+
+/* Default Low Power Mode configuration.
+ * See android/hardware/broadcom/libbt/include/bt_vendor_brcm.h for more details. */
+#ifndef LPM_SLEEP_MODE
+#define LPM_SLEEP_MODE                  0x01
+#endif
+#ifndef LPM_IDLE_THRESHOLD
+#define LPM_IDLE_THRESHOLD              0x01
+#endif
+#ifndef LPM_HC_IDLE_THRESHOLD
+#define LPM_HC_IDLE_THRESHOLD           0x01
+#endif
+#ifndef LPM_BT_WAKE_POLARITY
+#define LPM_BT_WAKE_POLARITY            0x01
+#endif
+#ifndef LPM_HOST_WAKE_POLARITY
+#define LPM_HOST_WAKE_POLARITY          0x01
+#endif
+#ifndef LPM_ALLOW_HOST_SLEEP_DURING_SCO
+#define LPM_ALLOW_HOST_SLEEP_DURING_SCO 0x01
+#endif
+#ifndef LPM_COMBINE_SLEEP_MODE_AND_LPM
+#define LPM_COMBINE_SLEEP_MODE_AND_LPM  0x01
+#endif
+#ifndef LPM_ENABLE_UART_TXD_TRI_STATE
+#define LPM_ENABLE_UART_TXD_TRI_STATE   0x00
+#endif
+
 uchar hci_write_sleep_mode[] = { 0x01, 0x27, 0xfc, 0x0c,
-	0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00,
-	0x00, 0x00 };
+	LPM_SLEEP_MODE,
+	LPM_IDLE_THRESHOLD,
+	LPM_HC_IDLE_THRESHOLD,
+	LPM_BT_WAKE_POLARITY,
+	LPM_HOST_WAKE_POLARITY,
+	LPM_ALLOW_HOST_SLEEP_DURING_SCO,
+	LPM_COMBINE_SLEEP_MODE_AND_LPM,
+	LPM_ENABLE_UART_TXD_TRI_STATE,
+	0x00, 0x00, 0x00, 0x00 };
 
 uchar hci_write_sco_pcm_int[] =
 	{ 0x01, 0x1C, 0xFC, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00 };
