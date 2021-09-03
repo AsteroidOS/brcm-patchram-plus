@@ -125,6 +125,8 @@
 #include <string.h>
 #include <signal.h>
 
+#include <unistd.h>
+
 #ifdef ANDROID
 #include <cutils/properties.h>
 #define LOG_TAG "brcm_patchram_plus"
